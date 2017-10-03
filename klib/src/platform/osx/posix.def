@@ -1,5 +1,5 @@
 package = platform.posix
-headers = alloca.h ar.h assert.h complex.h dirent.h dlfcn.h err.h errno.h fcntl.h \
+headers.osx = alloca.h ar.h assert.h complex.h dirent.h dlfcn.h err.h errno.h fcntl.h \
     fenv.h fnmatch.h fts.h ftw.h getopt.h grp.h inttypes.h libgen.h limits.h \
     locale.h math.h memory.h netdb.h paths.h poll.h \
     pthread.h pwd.h regex.h resolv.h sched.h search.h semaphore.h setjmp.h sgtty.h signal.h \
@@ -18,6 +18,17 @@ linkerOpts = -ldl
 ---
 // cinterop -def klib/src/platform/osx/posix.def -o platform.posix.klib
 
+#include "TargetConditionals.h"
+#if TARGET_IPHONE_SIMULATOR
+
+// TODO: provide simulator code
+
+#elif TARGET_OS_IPHONE
+
+// TODO: provide iphone code
+
+#elif TARGET_OS_MAC
+
 // Wrapper to access errno variable.
 static int posix_errno() {
     return errno;
@@ -27,3 +38,7 @@ static int posix_errno() {
 static int posix_h_errno() {
     return h_errno;
 }
+#else
+#   error "Unknown Apple platform"
+#endif
+
