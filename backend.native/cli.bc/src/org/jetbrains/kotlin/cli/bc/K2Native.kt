@@ -61,7 +61,7 @@ class K2Native : CLICompiler<K2NativeCompilerArguments>() {
     }
 
     val K2NativeCompilerArguments.isUsefulWithoutFreeArgs: Boolean
-        get() = this.listTargets || this.listPhases || this.checkDependencies
+        get() = this.listTargets || this.listPhases || this.checkDependencies || this.linkOnly != null
 
     fun Array<String>?.toNonNullList(): List<String> {
         return this?.asList<String>() ?: listOf<String>()
@@ -109,6 +109,7 @@ class K2Native : CLICompiler<K2NativeCompilerArguments>() {
                 arguments.manifestFile ?.let{ put(MANIFEST_FILE, it) }
                 arguments.runtimeFile ?.let{ put(RUNTIME_FILE, it) }
                 arguments.propertyFile ?.let{ put(PROPERTY_FILE, it) }
+                arguments.linkOnly ?.let{ put(LINK_ONLY, it) }
 
                 put(LIST_TARGETS, arguments.listTargets)
                 put(OPTIMIZATION, arguments.optimization)

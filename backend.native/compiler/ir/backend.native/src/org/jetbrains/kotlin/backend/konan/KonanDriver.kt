@@ -45,13 +45,22 @@ public fun runTopLevelPhases(konanConfig: KonanConfig, environment: KotlinCoreEn
         KonanPhases.list()
     }
 
-    if (config.kotlinSourceRoots.isEmpty()) return
+    if (config.kotlinSourceRoots.isEmpty() && config.get(KonanConfigKeys.LINK_ONLY) == null) return
 
     val context = Context(konanConfig)
 
     val analyzerWithCompilerReport = AnalyzerWithCompilerReport(context.messageCollector)
 
     val phaser = PhaseManager(context)
+
+    if (config.get(KonanConfigKeys.LINK_ONLY) != null) {
+        context.bitcodeFileName = config.get(KonanConfigKeys.LINK_ONLY)!!
+        phaser.phase(KonanPhase.LINK_STAGE) {
+            LinkStage(context).linkStage()
+        }
+        return
+    }
+
 
     phaser.phase(KonanPhase.FRONTEND) {
         // Build AST and binding info.

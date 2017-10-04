@@ -63,6 +63,9 @@ class K2NativeCompilerArguments : CommonCompilerArguments() {
     @Argument(value = "-linkerOpts", valueDescription = "<arg>", description = "Pass arguments to linker", delimiter = " ")
     var linkerArguments: Array<String>? = null
 
+    @Argument(value = "--link_only", description = "use .bc file instead of .kt")
+    var linkOnly: String? = null
+
     @Argument(value = "-nostdlib", description = "Don't link with stdlib")
     var nostdlib: Boolean = false
 

@@ -43,6 +43,8 @@ class KonanConfigKeys {
                 = CompilerConfigurationKey.create("included binary file paths")
         val LIBRARY_FILES: CompilerConfigurationKey<List<String>> 
                 = CompilerConfigurationKey.create("library file paths")
+        val LINK_ONLY: CompilerConfigurationKey<String>
+                = CompilerConfigurationKey.create("use .bc file instead of .kt")
         val LINKER_ARGS: CompilerConfigurationKey<List<String>>
                 = CompilerConfigurationKey.create("additional linker arguments")
         val LIST_PHASES: CompilerConfigurationKey<Boolean> 
